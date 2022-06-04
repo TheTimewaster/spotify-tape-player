@@ -15,7 +15,7 @@ export default defineNuxtPlugin(async () => {
 
   const spotify = new Spotify()
 
-  if (params.code != null && storageTokens.value.access_token == null) {
+  if (params.code != null && storageTokens.value.access_token.length === 0) {
     try {
       const postParams = new URLSearchParams({
         code: params.code as string,
@@ -43,7 +43,7 @@ export default defineNuxtPlugin(async () => {
     }
 
     spotify.setAccessToken(storageTokens.value.access_token);
-  } else if (storageTokens.value.access_token != null) {
+  } else if (storageTokens.value.access_token.length > 0) {
     spotify.setAccessToken(storageTokens.value.access_token);
   } else {
     router.push('/login');
