@@ -1,4 +1,5 @@
 {
+  "name": "spotify-tape-player",
   "private": true,
   "scripts": {
     "build": "nuxt build",
