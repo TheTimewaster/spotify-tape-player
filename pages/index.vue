@@ -1,10 +1,27 @@
 <template>
-  <div class="position-relative">
-    <h1 class="text-4xl font-bold text-white mb-8">Test</h1>
-    <albums-carousel />
-    <tape-sprite />
-    <currently-playing class="w-full fixed left-0 bottom-0" />
+  <div class="flex flex-col justify-center h-screen">
+    <!-- <albums-carousel /> -->
+    <template v-if="currentPlaybackStore.hasPlayback">
+      <tape-sprite class="w-[40rem] mx-auto mb-8" />
+      <currently-playing class="rounded-md w-[40rem] fixed bottom-8 right-8" />
+    </template>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import {useCurrentPlaybackStore} from '~~/store/playing-now';
+
+const currentPlaybackStore = useCurrentPlaybackStore();
+const intervalId = ref<number | null>(null);
+
+onMounted(async () => {
+  // intervalId.value = setInterval(async () => {
+  // }, 1000) as unknown as number;
+
+  await currentPlaybackStore.getCurrentPlayback();
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId.value);
+});
+</script>
