@@ -5,6 +5,7 @@ export default defineConfig({
     include: [
       'pages/**/*.{vue,ts}',
       'components/**/*.{vue,ts}',
+      'app.vue'
     ],
   },
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen">
+  <div>
     <button class="bg-green-500 p-4 text-center" @click="login" >
       Login with Spotify
     </button>
@@ -7,12 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import { useAxios } from '@vueuse/integrations/useAxios';
 import { v4 as uuidv4 } from 'uuid';
 
 const runtimeConfig = useRuntimeConfig();
-const { data, isLoading } = useAxios();
-
 const login = () => {
   let url = 'https://accounts.spotify.com/authorize';
   url += '?response_type=code';
@@ -23,12 +20,6 @@ const login = () => {
 
   window.location = url as unknown as Location;
 };
-
-watch(() => isLoading.value, () => {
-  if (!isLoading.value) {
-    console.log(data.value);
-  }
-})
 </script>
 
 <style scoped>

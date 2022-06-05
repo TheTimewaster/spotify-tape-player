@@ -1,5 +1,6 @@
-import { defineNuxtConfig } from 'nuxt'
-import eslintPlugin from 'vite-plugin-eslint'
+import { defineNuxtConfig } from 'nuxt';
+import eslint from 'vite-plugin-eslint';
+import svg from "vite-svg-loader";
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -11,6 +12,6 @@ export default defineNuxtConfig({
     },
   },
   vite: {
-    plugins: [eslintPlugin()],
+    plugins: [eslint(), svg()],
   },
 });

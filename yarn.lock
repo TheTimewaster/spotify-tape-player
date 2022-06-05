@@ -867,7 +867,7 @@
     "@vue/compiler-core" "3.2.36"
     "@vue/shared" "3.2.36"
 
-"@vue/compiler-sfc@3.2.36":
+"@vue/compiler-sfc@3.2.36", "@vue/compiler-sfc@^3.2.20":
   version "3.2.36"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.2.36.tgz#e5065e7c0e5170ffa750e3c3dd93a29db109d0f2"
   integrity sha512-AvGb4bTj4W8uQ4BqaSxo7UwTEqX5utdRSMyHy58OragWlt8nEACQ9mIeQh3K4di4/SX+41+pJrLIY01lHAOFOA==
@@ -5854,6 +5854,14 @@ vite-plugin-windicss@^1.8.4:
     debug "^4.3.4"
     kolorist "^1.5.1"
     windicss "^3.5.1"
+
+vite-svg-loader@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/vite-svg-loader/-/vite-svg-loader-3.3.0.tgz#232e044bb69f89dfe820ed8a209498fd0533e4ba"
+  integrity sha512-3bvC4NoaBIr8e9DoiYBjC/C8zg83wfc565PiWhUfJML1X4nGbVsGImOabWX1ebah8EYlRwIhRXkFjh7UntF1dg==
+  dependencies:
+    "@vue/compiler-sfc" "^3.2.20"
+    svgo "^2.7.0"
 
 vite@^2.9.8, vite@^2.9.9:
   version "2.9.9"

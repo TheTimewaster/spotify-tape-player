@@ -1,3 +1,4 @@
 {
-  "volar.takeOverMode.enabled": true
+  "volar.takeOverMode.enabled": true,
+  "svg.preview.background": "black"
 }
