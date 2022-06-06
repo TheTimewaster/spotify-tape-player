@@ -5,39 +5,40 @@
       <tape-sprite class="w-[40rem] mx-auto mb-8" />
       <currently-playing class="rounded-md w-[40rem] fixed bottom-8 right-8" />
     </template>
+    <p class="text-white text-center">You don't have any playback.</p>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useFetchRefreshToken } from '~~/composables/spotify/useRefreshToken';
 import { useCurrentPlaybackStore } from '~~/store/playing-now';
 
 definePageMeta({
   middleware: () => {
     const refreshToken = useCookie('spotify-refresh-token');
-    const accessToken = useCookie('spotify-access-token');
-    
-    console.log('redirect to login', refreshToken.value, accessToken.value);
-    if (refreshToken.value && accessToken.value) {
-      return true;
+    const accessToken = useCookie('spotify-acess-token');
+
+    if (refreshToken.value == null || accessToken.value == null) {
+      navigateTo('/login');
     }
 
-    console.log('redirect to login', refreshToken.value, accessToken.value);
-
-    return navigateTo('/login');
+    return true;
   }
 })
 
+const { fetch } = useFetchRefreshToken();
+if(process.server){
+  try {
+    await fetch();
+  } catch (error) {
+    navigateTo('/login');
+  }
+}
+
 const currentPlaybackStore = useCurrentPlaybackStore();
-const intervalId = ref<number | null>(null);
 
 onMounted(async () => {
-  // intervalId.value = setInterval(async () => {
-  // }, 1000) as unknown as number;
-
   await currentPlaybackStore.getCurrentPlayback();
 });
 
-onUnmounted(() => {
-  clearInterval(intervalId.value);
-});
 </script>
