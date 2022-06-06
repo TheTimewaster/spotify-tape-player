@@ -1,7 +1,7 @@
 <template>
   <div v-if="currentPlaybackStore.hasPlayback" class="bg-dark-500 flex p-4">
     <img
-      class="mr-4" :src="currentPlaybackStore.currentAlbum.images[2].url"
+      class="mr-4 h-full w-auto" :src="currentPlaybackStore.currentAlbum.images[2].url"
       :alt="currentPlaybackStore.currentAlbum.name" :width="currentPlaybackStore.currentAlbum.images[2].width"
       :height="currentPlaybackStore.currentAlbum.images[2].height" />
     <div class="text-white">

@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col justify-center h-screen">
+  <div class="flex flex-col justify-center items-center h-screen">
     <!-- <albums-carousel /> -->
     <template v-if="currentPlaybackStore.hasPlayback">
       <tape-sprite class="w-[40rem] mx-auto mb-8" />
-      <currently-playing class="rounded-md w-[40rem] fixed bottom-8 right-8" />
+      <currently-playing class="rounded-md w-full max-w-[40rem]" />
     </template>
-    <p class="text-white text-center">You don't have any playback.</p>
+    <p v-else class="text-white text-center">You don't have any playback.</p>
   </div>
 </template>
 
