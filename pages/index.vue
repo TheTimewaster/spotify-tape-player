@@ -23,11 +23,11 @@ definePageMeta({
     }
 
     return true;
-  }
-})
+  },
+});
 
 const { fetch } = useFetchRefreshToken();
-if(process.server){
+if (process.server) {
   try {
     await fetch();
   } catch (error) {
@@ -45,9 +45,9 @@ const initSpotifyPlayer = () => {
     script: [
       {
         src: 'https://sdk.scdn.co/spotify-player.js',
-      }
-    ]
-  })
+      },
+    ],
+  });
 
   window.onSpotifyWebPlaybackSDKReady = () => {
     player.value = new Spotify.Player({
@@ -61,11 +61,10 @@ const initSpotifyPlayer = () => {
     });
 
     player.value.connect();
-  }
-}
+  };
+};
 
 onMounted(() => {
   initSpotifyPlayer();
 });
-
 </script>
