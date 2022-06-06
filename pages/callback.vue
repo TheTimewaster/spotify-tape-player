@@ -39,9 +39,8 @@ if (route.query.code != null) {
     );
     
     useCookie('spotify-refresh-token').value = response.data.refresh_token;
-    useCookie('spotify-access-token').value = response.data.access_token;
     
-    navigateTo('/')
+    navigateTo('/');
   } catch (error) {
     navigateTo('/login');
   }
