@@ -9,7 +9,23 @@
 </template>
 
 <script lang="ts" setup>
-import {useCurrentPlaybackStore} from '~~/store/playing-now';
+import { useCurrentPlaybackStore } from '~~/store/playing-now';
+
+definePageMeta({
+  middleware: () => {
+    const refreshToken = useCookie('spotify-refresh-token');
+    const accessToken = useCookie('spotify-access-token');
+    
+    console.log('redirect to login', refreshToken.value, accessToken.value);
+    if (refreshToken.value && accessToken.value) {
+      return true;
+    }
+
+    console.log('redirect to login', refreshToken.value, accessToken.value);
+
+    return navigateTo('/login');
+  }
+})
 
 const currentPlaybackStore = useCurrentPlaybackStore();
 const intervalId = ref<number | null>(null);

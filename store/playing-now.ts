@@ -13,7 +13,7 @@ export const useCurrentPlaybackStore = defineStore('playingNow', {
   },
 
   getters: {
-    hasPlayback: (state) => state.currentPlayback != null,
+    hasPlayback: (state) => state.currentPlayback != null && state.currentPlayback.item != null,
     isPlaying: (state) => state.currentPlayback.is_playing,
     currentAlbum: (state) => state.currentPlayback.item.album,
     currentArtists: (state) => state.currentPlayback.item.artists.map(artist => artist.name).join(', '),

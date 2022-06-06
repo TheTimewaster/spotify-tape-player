@@ -15,7 +15,7 @@ const login = () => {
   url += '?response_type=code';
   url += `&client_id=${  encodeURIComponent( runtimeConfig.public['spotify-client-id'])}`;
   url += `&scope=${  encodeURIComponent('user-read-private streaming user-library-read playlist-read-private user-read-currently-playing user-read-playback-state')}`;
-  url += `&redirect_uri=${  encodeURIComponent(window.location.origin)}`;
+  url += `&redirect_uri=${  encodeURIComponent(window.location.origin)}/callback`;
   url += `&state=${  encodeURIComponent(uuidv4())}`;
 
   window.location = url as unknown as Location;
