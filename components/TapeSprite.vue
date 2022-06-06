@@ -217,9 +217,38 @@
 
     <div
       v-if="currentPlaybackStore.currentContext"
-      class="absolute top-0 bg-grey-500 bg-opacity-80 rounded color-white h-[5rem]"
+      class="absolute top-16 left-12 right-12 h-[4.5rem] border-2 border-light-500 rounded border-solid p-2 flex "
     >
-      <img class="h-full w-auto" :src="currentPlaybackStore.currentContext.images[0].url" />
+      <img class="h-[3.5rem] w-[3.5rem]" :src="currentPlaybackStore.currentContext.images[0].url" />
+      <div class="flex-1 mr-[3.5rem] text-center">
+        <p v-if="currentPlaybackStore.currentContext.type === 'artist'">
+          <small class="text-white">Artist</small>
+        </p>
+        <p v-else-if="currentPlaybackStore.currentContext.type === 'album'">
+          <small class="text-white">
+            {{ currentPlaybackStore.currentContext.artists[0].name }}
+          </small>
+        </p>
+        <p v-else-if="currentPlaybackStore.currentContext.type === 'playlist'">
+          <small class="text-white">
+            Playlist
+          </small>
+        </p>
+        <p class="text-white text-2xl font-black">{{ currentPlaybackStore.currentContext.name }}</p>
+      </div>
+    </div>
+
+    <div
+      v-else
+      class="absolute top-16 left-12 right-12 h-[4.5rem] border-2 border-light-500 rounded border-solid p-2 flex "
+    >
+      <img class="h-[3.5rem] w-[3.5rem]" :src="currentPlaybackStore.currentTrack.album.images[0].url" />
+      <div class="flex-1 mr-[3.5rem] text-center">
+        <p>
+          <small class="text-white">Song</small>
+        </p>
+        <p class="text-white text-2xl font-black">{{ currentPlaybackStore.currentTrack.name }}</p>
+      </div>
     </div>
   </div>
 </template>

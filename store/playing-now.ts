@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 
 export const useCurrentPlaybackStore = defineStore('playingNow', {
-  state: (): { playback: Spotify.PlaybackState, context: SpotifyApi.AlbumObjectFull | SpotifyApi.PlaylistObjectFull } => ({
+  state: (): { playback: Spotify.PlaybackState, context: SpotifyApi.AlbumObjectFull | SpotifyApi.PlaylistObjectFull | SpotifyApi.SingleArtistResponse } => ({
     playback: null,
     context: null
   }),
 
   getters: {
-    hasPlayback: (state)=> state.playback != null,
+    hasPlayback: (state) => state.playback != null,
     isPlaying: (state) => !state.playback.paused,
     hasCurrentTrack: (state) => state.playback.track_window.current_track != null,
     currentAlbum: (state) => state.playback.track_window.current_track.album,

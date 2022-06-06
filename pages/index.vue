@@ -16,10 +16,9 @@ import { useCurrentPlaybackStore } from '~~/store/playing-now';
 definePageMeta({
   middleware: () => {
     const refreshToken = useCookie('spotify-refresh-token');
-    const accessToken = useCookie('spotify-access-token');
 
-    if (refreshToken.value == null || accessToken.value == null) {
-      navigateTo('/login');
+    if (refreshToken.value == null) {
+      return navigateTo('/login');
     }
 
     return true;
@@ -60,6 +59,9 @@ const initSpotifyPlayer = () => {
     player.value.on('player_state_changed', async (event) => {
       currentPlaybackStore.playback = event;
 
+      if (currentPlaybackStore.context != null && currentPlaybackStore.context.uri === event.context.uri) return;
+
+      currentPlaybackStore.context = null;
       if (event.context.uri.startsWith('spotify:album')) {
         const albumId = event.context.uri.split(':')[2];
         const album = await $spotify.getAlbum(albumId);
@@ -68,6 +70,10 @@ const initSpotifyPlayer = () => {
         const playlistId = event.context.uri.split(':')[2];
         const playlist = await $spotify.getPlaylist(playlistId);
         currentPlaybackStore.context = playlist;
+      } else if (event.context.uri.startsWith('spotify:artist')) {
+        const artistId = event.context.uri.split(':')[2];
+        const artist = await $spotify.getArtist(artistId);
+        currentPlaybackStore.context = artist;
       }
     });
 
