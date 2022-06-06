@@ -3,7 +3,7 @@ import axios from "axios";
 export const useFetchRefreshToken = () => {
   const config = useRuntimeConfig();
   const refreshToken = useCookie('spotify-refresh-token');
-  const accessToken = useCookie('spotify-acess-token');
+  const accessToken = useCookie('spotify-access-token');
 
   const fetch = async () => {
     if (refreshToken.value == null || refreshToken.value === '') {

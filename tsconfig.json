@@ -3,7 +3,8 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "types": [
-      "@pinia/nuxt"
+      "@pinia/nuxt",
+      "@types/spotify-web-playback-sdk"
     ],
     "noImplicitThis": true
   }
