@@ -36,6 +36,7 @@ if (process.server) {
 }
 
 const currentPlaybackStore = useCurrentPlaybackStore();
+const { $spotify } = useNuxtApp();
 const accessToken = useCookie('spotify-access-token');
 const player = ref<Spotify.Player>(null);
 
@@ -56,8 +57,18 @@ const initSpotifyPlayer = () => {
       volume: 0.5,
     });
 
-    player.value.on('player_state_changed', (event) => {
-      currentPlaybackStore.currentPlayback = event;
+    player.value.on('player_state_changed', async (event) => {
+      currentPlaybackStore.playback = event;
+
+      if (event.context.uri.startsWith('spotify:album')) {
+        const albumId = event.context.uri.split(':')[2];
+        const album = await $spotify.getAlbum(albumId);
+        currentPlaybackStore.context = album;
+      } else if (event.context.uri.startsWith('spotify:playlist')) {
+        const playlistId = event.context.uri.split(':')[2];
+        const playlist = await $spotify.getPlaylist(playlistId);
+        currentPlaybackStore.context = playlist;
+      }
     });
 
     player.value.connect();
