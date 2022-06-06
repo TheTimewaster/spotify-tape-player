@@ -1,4 +1,4 @@
 {
-  "volar.takeOverMode.enabled": true,
-  "svg.preview.background": "black"
+  "svg.preview.background": "black",
+  "editor.formatOnSave": true
 }
