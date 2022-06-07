@@ -59,9 +59,16 @@ const initSpotifyPlayer = () => {
     player.value.on('player_state_changed', async (event) => {
       currentPlaybackStore.playback = event;
 
-      if (currentPlaybackStore.context != null && currentPlaybackStore.context.uri === event.context.uri) return;
+      if (
+        // sometimes event and other properties can be null for some reason
+        event == null ||
+        event.context == null ||
+        event.context.uri == null ||
+        // make sure that the fetch for context is only called once
+        (currentPlaybackStore.context != null && currentPlaybackStore.context.uri === event.context.uri)
+      )
+        return;
 
-      currentPlaybackStore.context = null;
       if (event.context.uri.startsWith('spotify:album')) {
         const albumId = event.context.uri.split(':')[2];
         const album = await $spotify.getAlbum(albumId);
@@ -74,6 +81,10 @@ const initSpotifyPlayer = () => {
         const artistId = event.context.uri.split(':')[2];
         const artist = await $spotify.getArtist(artistId);
         currentPlaybackStore.context = artist;
+      }
+
+      if (event.paused) {
+        player.value.togglePlay();
       }
     });
 
