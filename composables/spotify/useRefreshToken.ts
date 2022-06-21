@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const useFetchRefreshToken = () => {
   const config = useRuntimeConfig();
   const refreshToken = useCookie('spotify-refresh-token');
@@ -15,10 +13,10 @@ export const useFetchRefreshToken = () => {
       grant_type: 'refresh_token',
     });
 
-    const response = await axios(
+    const response = await $fetch<{access_token: string}>(
       'https://accounts.spotify.com/api/token',
       {
-        data: postParams,
+        body: postParams,
         method: 'POST',
         headers: {
           Authorization: `Basic ${btoa(
@@ -29,7 +27,7 @@ export const useFetchRefreshToken = () => {
       }
     );
 
-    accessToken.value = response.data.access_token;
+    accessToken.value = response.access_token;
   }
 
   return {
