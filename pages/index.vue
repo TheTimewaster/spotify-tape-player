@@ -4,6 +4,9 @@
     <template v-if="currentPlaybackStore.hasPlayback">
       <tape-sprite class="w-[40rem] mx-auto mb-8" />
       <currently-playing class="rounded-md w-full max-w-[40rem]" />
+      <button class="mt-2 rounded px-4 py-2 bg-dark-500 text-white" @click="player.togglePlay">
+        {{ currentPlaybackStore.isPlaying ? 'Pause' : 'Play' }}
+      </button>
     </template>
     <p v-else class="text-white text-center">You don't have any playback.</p>
   </div>
@@ -81,10 +84,6 @@ const initSpotifyPlayer = () => {
         const artistId = event.context.uri.split(':')[2];
         const artist = await $spotify.getArtist(artistId);
         currentPlaybackStore.context = artist;
-      }
-
-      if (event.paused) {
-        player.value.togglePlay();
       }
     });
 
