@@ -8,9 +8,14 @@
       <template v-if="currentPlaybackStore.hasPlayback">
         <tape-sprite class="w-full mb-8" />
         <currently-playing class="rounded-md w-full" />
-        <button class="mt-2 rounded px-4 py-2 bg-dark-500 text-white" @click="togglePlay">
-          {{ currentPlaybackStore.isPlaying ? 'Pause' : 'Play' }}
-        </button>
+        <div class="flex justify-center gap-4 mt-8">
+          <button class="rounded px-4 py-2 bg-dark-500 text-white" @click="previousTrack">Previous</button>
+
+          <button class="rounded px-4 py-2 bg-dark-500 text-white" @click="togglePlay">
+            {{ currentPlaybackStore.isPlaying ? 'Pause' : 'Play' }}
+          </button>
+          <button class="rounded px-4 py-2 bg-dark-500 text-white" @click="nextTrack">Next</button>
+        </div>
       </template>
       <p v-else class="text-white text-center">You don't have any playback.</p>
     </div>
@@ -46,6 +51,14 @@ useTitle(title);
 
 const togglePlay = () => {
   $getSpotifyPlayer().togglePlay();
+};
+
+const nextTrack = () => {
+  $getSpotifyPlayer().nextTrack();
+};
+
+const previousTrack = () => {
+  $getSpotifyPlayer().previousTrack();
 };
 
 const logout = () => {

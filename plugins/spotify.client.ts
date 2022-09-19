@@ -21,7 +21,7 @@ export default defineNuxtPlugin(() => {
     ],
   });
 
-  let spotifyPlayer;
+  let spotifyPlayer: Spotify.Player;
   window.onSpotifyWebPlaybackSDKReady = () => {
     spotifyPlayer = new Spotify.Player({
       name: '[TEST] Tape Player',
@@ -50,10 +50,6 @@ export default defineNuxtPlugin(() => {
         const playlistId = event.context.uri.split(':')[2];
         const playlist = await spotifyWeb.getPlaylist(playlistId);
         currentPlaybackStore.context = playlist;
-      } else if (event.context.uri.startsWith('spotify:artist')) {
-        const artistId = event.context.uri.split(':')[2];
-        const artist = await spotifyWeb.getArtist(artistId);
-        currentPlaybackStore.context = artist;
       }
     });
 
@@ -64,7 +60,7 @@ export default defineNuxtPlugin(() => {
     provide: {
       spotifyWeb,
       // TODO: this is a very hacky way to get the player instance, maybe refactor to a getter instead?!
-      getSpotifyPlayer: () => spotifyPlayer
+      getSpotifyPlayer: () => spotifyPlayer,
     },
   };
 });

@@ -221,10 +221,7 @@
     >
       <img class="h-[3.5rem] w-[3.5rem]" :src="currentPlaybackStore.currentContext.images[0].url" />
       <div class="flex-1 mr-[3.5rem] text-center">
-        <p v-if="currentPlaybackStore.currentContext.type === 'artist'">
-          <small class="text-white">Artist</small>
-        </p>
-        <p v-else-if="currentPlaybackStore.currentContext.type === 'album'">
+        <p v-if="currentPlaybackStore.currentContext.type === 'album'">
           <small class="text-white">
             {{ currentPlaybackStore.currentContext.artists[0].name }}
           </small>
@@ -271,6 +268,8 @@ const { pause, resume } = useRafFn(
   () => {
     const now = new Date().getTime();
     const totalProgress = (now - startTime.value) / totalDuration.value;
+    if (totalProgress < 0) return;
+
     rightStripEnd.value = rightStripInitValue + 50 * totalProgress;
     leftStripEnd.value = leftStripInitValue + 50 * totalProgress;
 
