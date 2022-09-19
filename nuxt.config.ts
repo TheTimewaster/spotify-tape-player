@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   buildModules: ['nuxt-windicss', '@vueuse/nuxt', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
-      'spotify-client-id': '1fbac5c6a38344dc8ed9234a65c152d7',
-      'spotify-client-secret': '6b42c7009559413d8e77b7fcc36d9049',
+      'spotify-client-id': process.env.SPOTIFY_CLIENT_ID,
+      'spotify-client-secret': process.env.SPOTIFY_CLIENT_SECRET,
     },
   },
   vite: {
@@ -32,5 +32,5 @@ export default defineNuxtConfig({
         },
       ],
     },
-  }
+  },
 });
