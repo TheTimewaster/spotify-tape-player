@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useTitle } from '@vueuse/core';
 import { useCurrentPlaybackStore } from '~~/store/playing-now';
 
 definePageMeta({
@@ -34,6 +35,12 @@ definePageMeta({
 
 const { $getSpotifyPlayer } = useNuxtApp();
 const currentPlaybackStore = useCurrentPlaybackStore();
+
+useTitle(
+  currentPlaybackStore.currentTrack == null
+    ? 'Home'
+    : `${currentPlaybackStore.currentTrack.name} - ${currentPlaybackStore.currentArtists}`
+);
 
 const togglePlay = () => {
   $getSpotifyPlayer().togglePlay();

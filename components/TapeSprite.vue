@@ -217,7 +217,7 @@
 
     <div
       v-if="currentPlaybackStore.currentContext"
-      class="absolute top-16 left-12 right-12 h-[4.5rem] border-2 border-light-500 rounded border-solid p-2 flex "
+      class="absolute top-16 left-12 right-12 h-[4.5rem] border-2 border-light-500 rounded border-solid p-2 flex"
     >
       <img class="h-[3.5rem] w-[3.5rem]" :src="currentPlaybackStore.currentContext.images[0].url" />
       <div class="flex-1 mr-[3.5rem] text-center">
@@ -230,9 +230,7 @@
           </small>
         </p>
         <p v-else-if="currentPlaybackStore.currentContext.type === 'playlist'">
-          <small class="text-white">
-            Playlist
-          </small>
+          <small class="text-white"> Playlist </small>
         </p>
         <p class="text-white text-2xl font-black">{{ currentPlaybackStore.currentContext.name }}</p>
       </div>
@@ -240,7 +238,7 @@
 
     <div
       v-else
-      class="absolute top-16 left-12 right-12 h-[4.5rem] border-2 border-light-500 rounded border-solid p-2 flex "
+      class="absolute top-16 left-12 right-12 h-[4.5rem] border-2 border-light-500 rounded border-solid p-2 flex"
     >
       <img class="h-[3.5rem] w-[3.5rem]" :src="currentPlaybackStore.currentTrack.album.images[0].url" />
       <div class="flex-1 mr-[3.5rem] text-center">
@@ -267,17 +265,17 @@ const leftRollRadius = ref<number>(75);
 const rightRollRadius = ref<number>(25);
 
 const startTime = ref<number>(0);
-const endTime = ref<number>(0);
+const totalDuration = ref<number>(0);
 
 const { pause, resume } = useRafFn(
   () => {
     const now = new Date().getTime();
-    const songProgress = (now - startTime.value) / currentPlaybackStore.currentDuration;
-    rightStripEnd.value = rightStripInitValue + 50 * songProgress;
-    leftStripEnd.value = leftStripInitValue + 50 * songProgress;
+    const totalProgress = (now - startTime.value) / totalDuration.value;
+    rightStripEnd.value = rightStripInitValue + 50 * totalProgress;
+    leftStripEnd.value = leftStripInitValue + 50 * totalProgress;
 
-    leftRollRadius.value = 25 + 50 * (1 - songProgress);
-    rightRollRadius.value = 25 + 50 * songProgress;
+    leftRollRadius.value = 25 + 50 * (1 - totalProgress);
+    rightRollRadius.value = 25 + 50 * totalProgress;
   },
   { immediate: false }
 );
@@ -290,8 +288,14 @@ watchEffect(() => {
     if (currentPlaybackStore.isPlaying) {
       spinners.forEach((spinnerGroup) => spinnerGroup.classList.add('spinner--spin'));
 
-      endTime.value = new Date().getTime() + currentPlaybackStore.currentDuration;
-      startTime.value = new Date().getTime() - currentPlaybackStore.currentProgress;
+      startTime.value = new Date().getTime() - currentPlaybackStore.currentContextProgress;
+
+      let contextDuration = currentPlaybackStore.currentContextDuration;
+      if (contextDuration === 0) {
+        contextDuration = currentPlaybackStore.currentTrackDuration;
+      }
+
+      totalDuration.value = contextDuration;
       resume();
     } else {
       spinners.forEach((spinnerGroup) => spinnerGroup.classList.remove('spinner--spin'));
