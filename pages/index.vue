@@ -36,11 +36,13 @@ definePageMeta({
 const { $getSpotifyPlayer } = useNuxtApp();
 const currentPlaybackStore = useCurrentPlaybackStore();
 
-useTitle(
-  currentPlaybackStore.currentTrack == null
-    ? 'Home'
-    : `${currentPlaybackStore.currentTrack.name} - ${currentPlaybackStore.currentArtists}`
+const title = computed<string>(() =>
+  currentPlaybackStore.playback == null
+    ? 'No Playback | Tape Player'
+    : `${currentPlaybackStore.currentTrack.name} - ${currentPlaybackStore.currentArtists} | Tape Player`
 );
+
+useTitle(title);
 
 const togglePlay = () => {
   $getSpotifyPlayer().togglePlay();
